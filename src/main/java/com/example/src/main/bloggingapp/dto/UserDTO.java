@@ -2,9 +2,13 @@ package com.example.src.main.bloggingapp.dto;
 
 import java.util.Date;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
 @NoArgsConstructor
@@ -12,7 +16,13 @@ import lombok.ToString;
 @ToString
 public class UserDTO {
 	private int id;
+	
+	@NotEmpty
+	@Min(4)
 	private String username;
+	
+	@NotNull
+	@Size(min=8, max=12, message="password must be in range of 8 to 10 characters")
 	private String password;
 	private String email;
 	private String about;

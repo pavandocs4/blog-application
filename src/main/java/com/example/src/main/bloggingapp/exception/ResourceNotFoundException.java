@@ -1,15 +1,17 @@
 package com.example.src.main.bloggingapp.exception;
 
-import com.example.src.main.bloggingapp.entity.User;
-
 public class ResourceNotFoundException extends RuntimeException{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3562327697141287497L;
 	String resourceName;
 	String fieldName;
 	Object fieldValue;
 	
 	public ResourceNotFoundException(String resourceName, String fieldName, Object value) {
-		super(String.format("%s not found with %s: %l", resourceName, fieldName, value));
+		super(String.format("%s not found with %s: %s", resourceName, fieldName, value));
 		this.resourceName=resourceName;
 		this.fieldName=fieldName;
 		this.fieldValue=value;
