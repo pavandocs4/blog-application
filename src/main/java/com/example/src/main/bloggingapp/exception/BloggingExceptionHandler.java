@@ -1,6 +1,8 @@
 package com.example.src.main.bloggingapp.exception;
 
 import java.util.HashMap;
+
+import javax.persistence.EntityNotFoundException;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
@@ -15,6 +17,19 @@ public class BloggingExceptionHandler {
 	
 	@ExceptionHandler(ResourceNotFoundException.class)
 	public ResponseEntity<ApiResponse> resourceNotFoundExceptionHandler(ResourceNotFoundException ex){
+		 ApiResponse apiResponse= new ApiResponse(ex.getMessage(), false);
+		 return new ResponseEntity<ApiResponse>(apiResponse, HttpStatus.BAD_REQUEST);	
+	}
+	
+	
+	@ExceptionHandler(EntityNotFoundException.class)
+	public ResponseEntity<ApiResponse> entityNotFoundExceptionHandler(EntityNotFoundException ex){
+		 ApiResponse apiResponse= new ApiResponse(ex.getMessage(), false);
+		 return new ResponseEntity<ApiResponse>(apiResponse, HttpStatus.BAD_REQUEST);	
+	}
+	
+	@ExceptionHandler(ResourceAlreadyPresentException.class)
+	public ResponseEntity<ApiResponse> resourceFoundExceptionHandler(ResourceAlreadyPresentException ex){
 		 ApiResponse apiResponse= new ApiResponse(ex.getMessage(), false);
 		 return new ResponseEntity<ApiResponse>(apiResponse, HttpStatus.BAD_REQUEST);	
 	}

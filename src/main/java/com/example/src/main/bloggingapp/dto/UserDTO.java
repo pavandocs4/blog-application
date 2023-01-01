@@ -18,7 +18,7 @@ public class UserDTO {
 	private int id;
 	
 	@NotEmpty
-	@Min(4)
+	@Size(min=4, message="username must be at least of 4 characters")
 	private String username;
 	
 	@NotNull

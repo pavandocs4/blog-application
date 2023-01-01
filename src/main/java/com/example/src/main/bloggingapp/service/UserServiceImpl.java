@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.example.src.main.bloggingapp.dto.UserDTO;
 import com.example.src.main.bloggingapp.dtoconverter.UserDTOConverter;
 import com.example.src.main.bloggingapp.entity.User;
+import com.example.src.main.bloggingapp.exception.ResourceAlreadyPresentException;
 import com.example.src.main.bloggingapp.exception.ResourceNotFoundException;
 import com.example.src.main.bloggingapp.repository.UserRepository;
 
@@ -31,7 +32,7 @@ public class UserServiceImpl implements UserService {
 			userRepo.save(user);
 		}
 		else { 
-			throw new ResourceNotFoundException("User", "username", userdto.getUsername());
+			throw new ResourceAlreadyPresentException("User", "username", userdto.getUsername());
 		}
 		
 		return dtoConverter.objToDTO(user);
@@ -40,7 +41,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserDTO updateUser(UserDTO userdto) {
 		String username= userdto.getUsername();
-		User userToUpdate= userRepo.findByUsername(username);
+		User userToUpdate=Optional.ofNullable(userRepo.findByUsername(username)).orElseThrow(
+				()-> new ResourceNotFoundException("User", "username", username));
 		userToUpdate.setUsername(Optional.ofNullable(userdto.getUsername()).orElse(userToUpdate.getUsername()));
 		userToUpdate.setPassword(Optional.ofNullable(userdto.getPassword()).orElse(userToUpdate.getPassword()));
 		userToUpdate.setEmail(Optional.ofNullable(userdto.getEmail()).orElse(userToUpdate.getEmail()));
