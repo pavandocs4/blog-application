@@ -1,12 +1,16 @@
 package com.example.src.main.bloggingapp.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -46,6 +50,9 @@ public class User {
 	private Date auditUpdateDate;
 		
 	private String about;
+	
+	@OneToMany(mappedBy = "user", cascade= CascadeType.ALL)
+	private List<Post> posts=new ArrayList<>();
 	
 	public User(int id, String username, String password, String email, String userAccess, Date auditInsertDate,
 			Date auditUpdateDate, String about) {

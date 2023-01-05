@@ -49,8 +49,8 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 	@Override
 	public CategoryDTO getCategoryById(Integer id) {
-		Optional<Category> cat= Optional.ofNullable(repo.findById(id)).orElseThrow(()-> new ResourceNotFoundException("Category", "id", id));
-		return dtoConverter.objToDTO(cat.get());
+		Category cat= repo.findById(id).orElseThrow(()-> new ResourceNotFoundException("Category", "id", id));
+		return dtoConverter.objToDTO(cat);
 	}
 
 	@Override
@@ -62,13 +62,13 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Override
 	public String deleteCategory(Integer id) {
-		Optional<Category> cat= Optional.ofNullable(repo.findById(id)).orElseThrow(()-> new ResourceNotFoundException("Category", "id", id));
+		Category cat= repo.findById(id).orElseThrow(()-> new ResourceNotFoundException("Category", "id", id));
 		repo.deleteById(id);
 		return "Category with id "+id+" deleted successfully";
 	}
 
 	public boolean isCategoryExists(String title) {
-		Category cat = repo.findByTitle(title);
+		Category cat= repo.findByTitle(title).orElseThrow(()->new ResourceNotFoundException("Category", "title", title));
 		boolean flag = Objects.nonNull(cat) ? true : false;
 		return flag;
 	}

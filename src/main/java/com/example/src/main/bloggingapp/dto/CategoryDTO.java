@@ -1,9 +1,17 @@
 package com.example.src.main.bloggingapp.dto;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
 public class CategoryDTO {
 	
 	Integer id;
+	
+	@NotEmpty
+	@Size(min=4, max=12)
 	String title;
+	
+	@Size(min=10)
 	String description;
 	
 	public CategoryDTO() {	
@@ -37,6 +45,4 @@ public class CategoryDTO {
 		this.description = description;
 		return this;
 	}
-	
-	
 }

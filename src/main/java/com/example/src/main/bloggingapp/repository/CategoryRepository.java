@@ -1,6 +1,7 @@
 package com.example.src.main.bloggingapp.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,7 +13,7 @@ import com.example.src.main.bloggingapp.entity.Category;
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Integer> {
 
-	public Category findByTitle(String title);
+	public Optional<Category> findByTitle(String title);
 	
 	/*
 	 * @Query("select * from categories c") public List<Category> getAllUsers();

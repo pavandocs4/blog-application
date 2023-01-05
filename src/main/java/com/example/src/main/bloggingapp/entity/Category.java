@@ -1,5 +1,8 @@
 package com.example.src.main.bloggingapp.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.*;
 
 @Entity
@@ -17,6 +20,9 @@ public class Category {
 	@Column(name="category_description")
 	String Description;
 
+	@OneToMany(mappedBy="category", cascade= CascadeType.ALL)
+	private List<Post> posts= new ArrayList<>();
+	
 	public Category() {
 		
 	}
