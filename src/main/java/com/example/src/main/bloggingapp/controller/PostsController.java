@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.src.main.bloggingapp.dto.PostDTO;
+import com.example.src.main.bloggingapp.entity.PostsPageRequest;
 import com.example.src.main.bloggingapp.service.PostService;
 
 @RestController
@@ -62,9 +64,14 @@ public class PostsController {
 	}
 	
 	@GetMapping("/getAllPosts")
-	public ResponseEntity<List<PostDTO>> getAllPosts(){
-		List<PostDTO> res= service.getAllPosts();
-		return new ResponseEntity<List<PostDTO>>(res, HttpStatus.OK);
+	public ResponseEntity<PostsPageRequest> getAllPosts(
+			@RequestParam(value= "pageNo", defaultValue="0", required=false) Integer pageNo,
+			@RequestParam(value= "pageSize", defaultValue="2", required= false) Integer pageSize,
+			@RequestParam(value="sortBy", defaultValue="id", required=false) String sortParameter,
+			@RequestParam(value="order", defaultValue="asc", required= false) String order
+			){
+		PostsPageRequest res= service.getAllPosts(pageNo, pageSize, sortParameter, order);
+		return new ResponseEntity<PostsPageRequest>(res, HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/deleteMapping/{id}")

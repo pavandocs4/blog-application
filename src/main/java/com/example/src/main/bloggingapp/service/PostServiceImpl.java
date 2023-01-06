@@ -7,12 +7,17 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.example.src.main.bloggingapp.dto.PostDTO;
 import com.example.src.main.bloggingapp.dtoconverter.PostDTOConverter;
 import com.example.src.main.bloggingapp.entity.Category;
 import com.example.src.main.bloggingapp.entity.Post;
+import com.example.src.main.bloggingapp.entity.PostsPageRequest;
 import com.example.src.main.bloggingapp.entity.User;
 import com.example.src.main.bloggingapp.exception.ResourceAlreadyPresentException;
 import com.example.src.main.bloggingapp.exception.ResourceNotFoundException;
@@ -101,10 +106,23 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public List<PostDTO> getAllPosts() {
-		List<Post> posts=postRepo.findAll();
+	public PostsPageRequest getAllPosts(Integer pageNo, Integer pageSize, String sortBy, String order) {
+	
+		Sort sortTech = order.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+		
+		Pageable page= PageRequest.of(pageNo, pageSize, sortTech);
+		Page<Post> pageOfPost=postRepo.findAll(page);
+		List<Post> posts= pageOfPost.getContent();
 		List<PostDTO> dtoList= posts.stream().map(p-> postDTOConverter.objToDTO(p)).collect(Collectors.toList());
-		return dtoList;
+		PostsPageRequest request= new PostsPageRequest();
+		request.setContents(dtoList)
+			   .setPageNo(pageNo)
+			   .setPageSize(pageSize)
+			   .setTotalPages(pageOfPost.getTotalPages())
+			   .setTotalRecords(pageOfPost.getNumberOfElements())
+			   .setLastPage(pageOfPost.isLast());
+				
+		return request;
 	}
 
 	@Override
