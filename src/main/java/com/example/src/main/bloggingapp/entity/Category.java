@@ -24,7 +24,7 @@ public class Category {
 	private List<Post> posts= new ArrayList<>();
 	
 	public Category() {
-		
+		//Empty Constructor
 	}
 	
 	public Integer getId() {
