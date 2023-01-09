@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.src.main.bloggingapp.dto.UserDTO;
-import com.example.src.main.bloggingapp.service.UserServiceImpl;
+import com.example.src.main.bloggingapp.serviceImpl.UserServiceImpl;
 
 @RestController
 public class UserController {

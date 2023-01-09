@@ -1,4 +1,4 @@
-package com.example.src.main.bloggingapp.service;
+package com.example.src.main.bloggingapp.serviceImpl;
 
 import java.util.List;
 import java.util.Objects;
@@ -15,6 +15,7 @@ import com.example.src.main.bloggingapp.entity.User;
 import com.example.src.main.bloggingapp.exception.ResourceAlreadyPresentException;
 import com.example.src.main.bloggingapp.exception.ResourceNotFoundException;
 import com.example.src.main.bloggingapp.repository.CategoryRepository;
+import com.example.src.main.bloggingapp.service.CategoryService;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {

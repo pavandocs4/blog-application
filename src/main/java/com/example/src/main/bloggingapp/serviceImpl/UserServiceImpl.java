@@ -1,4 +1,4 @@
-package com.example.src.main.bloggingapp.service;
+package com.example.src.main.bloggingapp.serviceImpl;
 
 import java.util.Date;
 import java.util.List;
@@ -15,6 +15,7 @@ import com.example.src.main.bloggingapp.entity.User;
 import com.example.src.main.bloggingapp.exception.ResourceAlreadyPresentException;
 import com.example.src.main.bloggingapp.exception.ResourceNotFoundException;
 import com.example.src.main.bloggingapp.repository.UserRepository;
+import com.example.src.main.bloggingapp.service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {

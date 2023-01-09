@@ -26,4 +26,7 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
 	@Query(value="select * from posts p where p.user_id=:userId and p.category_id=:catId", nativeQuery=true)
 	List<Post> findByUsernameAndCategory(@RequestParam("user_id") int userId, @RequestParam("cat_Id") Integer catId);
 
+	@Query(value="select * from posts p where p.title like :param", nativeQuery=true)
+	List<Post> searchPostByParamTitle(@RequestParam("param") String param); 
+
 }

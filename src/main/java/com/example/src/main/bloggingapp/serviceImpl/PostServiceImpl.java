@@ -1,4 +1,4 @@
-package com.example.src.main.bloggingapp.service;
+package com.example.src.main.bloggingapp.serviceImpl;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -24,6 +24,7 @@ import com.example.src.main.bloggingapp.exception.ResourceNotFoundException;
 import com.example.src.main.bloggingapp.repository.CategoryRepository;
 import com.example.src.main.bloggingapp.repository.PostRepository;
 import com.example.src.main.bloggingapp.repository.UserRepository;
+import com.example.src.main.bloggingapp.service.PostService;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -106,9 +107,9 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public PostsPageRequest getAllPosts(Integer pageNo, Integer pageSize, String sortBy, String order) {
+	public PostsPageRequest getAllPosts(Integer pageNo, Integer pageSize, String sortByEntity, String order) {
 	
-		Sort sortTech = order.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+		Sort sortTech = order.equalsIgnoreCase("asc") ? Sort.by(sortByEntity).ascending() : Sort.by(sortByEntity).descending();
 		
 		Pageable page= PageRequest.of(pageNo, pageSize, sortTech);
 		Page<Post> pageOfPost=postRepo.findAll(page);
@@ -130,6 +131,14 @@ public class PostServiceImpl implements PostService {
 		postRepo.findById(id).orElseThrow(()-> new ResourceNotFoundException("Post","id",id));
 		postRepo.deleteById(id);
 		return "Post deleted successfully";
+	}
+
+	@Override
+	public List<PostDTO> searchPost(String param) {
+		List<Post> result = postRepo.searchPostByParamTitle(param);
+		List<PostDTO> resultDTOList = result.stream().map(p -> postDTOConverter.objToDTO(p))
+				.collect(Collectors.toList());
+		return resultDTOList;
 	}
 
 }

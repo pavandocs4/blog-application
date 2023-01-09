@@ -15,4 +15,5 @@ public interface PostService {
 	List<PostDTO> getPostsByUsernameAndCategory(String username, String category);
 	PostsPageRequest getAllPosts(Integer pageNo, Integer pageSize, String sortBy, String order);
 	String deletePost(Integer id);
+	List<PostDTO> searchPost(String param);
 }

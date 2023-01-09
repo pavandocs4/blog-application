@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.src.main.bloggingapp.dto.CategoryDTO;
 import com.example.src.main.bloggingapp.dto.UserDTO;
-import com.example.src.main.bloggingapp.service.CategoryServiceImpl;
+import com.example.src.main.bloggingapp.serviceImpl.CategoryServiceImpl;
 
 @RestController
 public class CategoryController {
