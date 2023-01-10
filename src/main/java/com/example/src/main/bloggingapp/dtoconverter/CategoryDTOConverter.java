@@ -15,13 +15,11 @@ public class CategoryDTOConverter implements DTOConverter<Category, CategoryDTO>
 
 	@Override
 	public CategoryDTO objToDTO(Category t) {
-		// TODO Auto-generated method stub
 		return mapper.map(t, CategoryDTO.class);
 	}
 
 	@Override
 	public Category objFromDTO(CategoryDTO u) {
-		// TODO Auto-generated method stub
 		return mapper.map(u, Category.class);
 	}
 

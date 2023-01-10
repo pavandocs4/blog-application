@@ -15,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="posts")
 public class Post {
@@ -39,13 +41,22 @@ public class Post {
 	private Date updateDate;
 	
 	@ManyToOne
+	@JsonIgnore 
 	@JoinColumn(name="category_id")
 	private Category category;
 	
 	@ManyToOne
+	@JsonIgnore
 	@JoinColumn(name="user_id")
 	private User user;
 	
+	/*
+	 * The problem with serializing a User will be that your User has many posts
+	 * which point back at the same User. There are many ways to tell your JSON
+	 * serializer how to handle it. Assuming you are using Jackson, the easiest
+	 * might be to add the @JsonIgnore annotation on one side that you don't need
+	 * serialized.
+	 */	
 	@OneToMany(mappedBy="post", cascade= CascadeType.ALL)
 	private Set<Comment> comments= new HashSet<>();
 
@@ -53,8 +64,9 @@ public class Post {
 		
 	}
 	
+	
 	public Post(Integer id, String title, String content, String image, Date insertDate, Date updateDate,
-			Category category, User user) {
+			Category category, User user, Set<Comment> comments) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -64,6 +76,16 @@ public class Post {
 		this.updateDate = updateDate;
 		this.category = category;
 		this.user = user;
+		this.comments = comments;
+	}
+
+	public Set<Comment> getComments() {
+		return comments;
+	}
+
+	public Post setComments(Set<Comment> comments) {
+		this.comments = comments;
+		return this;
 	}
 
 	public Integer getId() {

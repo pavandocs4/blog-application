@@ -48,7 +48,6 @@ public class PostServiceImpl implements PostService {
 
 	@Override
 	public PostDTO addNewPost(HashMap<String, Object> input) {
-		// TODO Auto-generated method stub
 		PostDTO dto = OBJECT_MAPPER.convertValue(input.get("post"), PostDTO.class);
 
 		Integer userId = OBJECT_MAPPER.convertValue(input.get("userId"), Integer.class);

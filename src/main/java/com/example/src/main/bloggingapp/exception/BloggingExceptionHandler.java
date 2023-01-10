@@ -3,6 +3,9 @@ package com.example.src.main.bloggingapp.exception;
 import java.util.HashMap;
 
 import javax.persistence.EntityNotFoundException;
+import javax.validation.ConstraintViolationException;
+import javax.validation.metadata.ConstraintDescriptor;
+
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
@@ -43,5 +46,18 @@ public class BloggingExceptionHandler {
 			 response.put(obj, msg);
 		 });
 		 return new ResponseEntity<Map<String, String>>(response, HttpStatus.BAD_REQUEST);	
+	}
+	
+	@ExceptionHandler(ConstraintViolationException.class)
+	public ResponseEntity<Map<String, String>> constraintViolationException(ConstraintViolationException ex){
+		Map<String, String> res= new HashMap<>();
+		ex.getConstraintViolations().stream().forEach(e ->
+		{
+			String key= e.getConstraintDescriptor().toString();
+			String val=e.getMessage();
+			res.put(key, val);
+		});
+		return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
+		
 	}
 }

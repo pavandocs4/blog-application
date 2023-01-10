@@ -1,8 +1,11 @@
 package com.example.src.main.bloggingapp.dto;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.example.src.main.bloggingapp.entity.Category;
+import com.example.src.main.bloggingapp.entity.Comment;
 import com.example.src.main.bloggingapp.entity.User;
 
 public class PostDTO {
@@ -15,6 +18,7 @@ public class PostDTO {
 	private Date updateDate;
 	private Category category;
 	private User user;
+	private Set<Comment> comments= new HashSet<>();
 	
 	public Integer getId() {
 		return id;
@@ -63,6 +67,12 @@ public class PostDTO {
 	}
 	public void setUser(User user) {
 		this.user = user;
+	}
+	public Set<Comment> getComments() {
+		return comments;
+	}
+	public void setComments(Set<Comment> comments) {
+		this.comments = comments;
 	}
 
 }
