@@ -24,6 +24,10 @@ public class BloggingExceptionHandler {
 		 return new ResponseEntity<ApiResponse>(apiResponse, HttpStatus.BAD_REQUEST);	
 	}
 	
+	@ExceptionHandler(InvalidCredentialsException.class)
+	public ResponseEntity<String> invalidCredentialsException(InvalidCredentialsException ex){
+		return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+	}
 	
 	@ExceptionHandler(EntityNotFoundException.class)
 	public ResponseEntity<ApiResponse> entityNotFoundExceptionHandler(EntityNotFoundException ex){

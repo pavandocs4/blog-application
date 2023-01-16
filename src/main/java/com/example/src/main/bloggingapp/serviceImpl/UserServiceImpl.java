@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.src.main.bloggingapp.dto.UserDTO;
@@ -30,6 +31,10 @@ public class UserServiceImpl implements UserService {
 		User user=new User();
 		if(!userExists(userdto.getUsername())) {
 			 user= dtoConverter.objFromDTO(userdto);
+			 
+			 BCryptPasswordEncoder encoder=new BCryptPasswordEncoder();
+			 String pass= encoder.encode(user.getPassword());
+			 user.setPassword(pass);
 			userRepo.save(user);
 		}
 		else { 
